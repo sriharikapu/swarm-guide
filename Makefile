@@ -52,6 +52,11 @@ help:
 clean:
 	rm -rf $(BUILDDIR)/*
 
+html-docker:
+	@which docker &> /dev/null || (echo "please, install Docker to use this target" >&2 && exit 1)
+	@docker build --tag swarm-sphinx .
+	@docker run --rm --volume $$PWD:/src swarm-sphinx make html
+
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
